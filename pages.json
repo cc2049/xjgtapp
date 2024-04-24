@@ -243,7 +243,46 @@
 				"navigationBarTitleText": "用户注册",
 				"navigationBarTextStyle": "black"
 			}
+		},
+		{
+			"path": "pages/tab02/notice",
+			"style": {
+				"navigationBarTitleText": "入场公告"
+			}
+		},
+		{
+			"path" : "pages/tab05/forgetPassword",
+			"style" : 
+			{
+				"navigationBarTitleText" : "忘记密码",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/tab02/railwayImg",
+			"style" : 
+			{
+				"navigationBarTitleText" : "厂内路线图",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/tab03/CarInQueue",
+			"style" : 
+			{
+				"navigationBarTitleText" : "排队列表",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/tab03/CarInQueueStats",
+			"style" : 
+			{
+				"navigationBarTitleText" : "排队状态",
+				"enablePullDownRefresh" : false
+			}
 		}
+		
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

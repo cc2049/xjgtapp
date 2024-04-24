@@ -33,13 +33,15 @@
 					<button hover-class="e-hover-btn" formType="submit" class="login-btn">登录</button>
 					<view class="uni-flex e-flex-bwt">
 
-						<view class="" style="padding: 10px 15px 10px 0;" @click="clearStorages" v-if="!system">
+					<!-- 	<view class="" style="padding: 10px 15px 10px 0;" @click="clearStorages" v-if="!system">
 							清除缓存
-						</view>
-						<view class="" style="padding: 10px 15px 10px 0;" @click="register" v-else>
+						</view> -->
+						<view class="" style="padding: 10px 15px 10px 0;" @click="register">
 							新户注册
 						</view>
-
+						<view class="" style="padding: 10px 15px 10px 0;" @click="forgetPassword">
+							忘记密码
+						</view>
 						<view class="" style="padding: 10px 0px 10px 15px;" @click="openViews">
 							网络配置
 						</view>
@@ -76,16 +78,16 @@
 	// var jpushModule = uni.requireNativePlugin("JG-JPush")
 
 	var GDIPdata = [
-		{
-			name: "远大电信",
-			ip: "218.76.167.111:8810",
-			isadd: false
-		},
-		{
-			name: "远大联通",
-			ip: "42.48.136.54:8820",
-			isadd: false
-		}
+		// {
+		// 	name: "远大电信",
+		// 	ip: "218.76.167.111:8810",
+		// 	isadd: false
+		// },
+		// {
+		// 	name: "远大联通",
+		// 	ip: "42.48.136.54:8820",
+		// 	isadd: false
+		// }
 	];
 
 	// var GDIPdata = [{
@@ -156,6 +158,24 @@
 		},
 		methods: {
 			...mapMutations(['setSOBinfoReduce', 'setIsSOBReduce']),
+			
+			forgetPassword(){
+				let base = 'http://' + _self.serverList[_self.activeIndex].ip;
+				// console.log(_self.serverList[_self.activeIndex].ip);
+				if (!base) {
+					this.$utils.tips('请检查网络配置和服务器地址')
+					return setTimeout(() => {
+						uni.navigateTo({
+							url: 'network02'
+						});
+					}, 500)
+				}
+				uni.navigateTo({
+					url: 'forgetPassword?baseURL=' + base
+				});
+				
+				
+			},
 
 			register() {
 				let base = 'http://' + _self.serverList[_self.activeIndex].ip;
@@ -172,8 +192,6 @@
 				uni.navigateTo({
 					url: 'register?baseURL=' + base
 				});
-
-
 			},
 
 			// 极光推送获取设备RegisterID 

@@ -46,6 +46,9 @@
 					<view class="">
 						<button class="cu-btn round lines-blue" @click.stop="openDetail(item,1)">{{ '详情' }}</button>
 					</view>
+					<view class="">
+						<button class="cu-btn round lines-blue" @click.stop="railwayImg(item)">厂内路线图</button>
+					</view>
 				</view>
 
 			</view>
@@ -192,6 +195,17 @@
 			this.getNewsList();
 		},
 		methods: {
+			railwayImg(item){
+				console.log(item);
+				_self.uniSkip.navigateTo({
+					url: 'railwayImg?baseUrl=' + baseUrl + '&PK_MATERIAL=' + item.PK_MATERIAL+'&myToken=' +token
+					// data: {
+					// 	baseUrl: baseUrl,
+					// 	myToken: token,
+					// 	PK_MATERIAL:item.PK_MATERIAL
+					// }
+				})
+			},
 			showModal(e) {
 				// console.log(initQueryJson);
 				this.$refs.queryDrawer.showDrawer('showLeft')
@@ -230,6 +244,7 @@
 					_formValue[item.FIELDNAME] = tipText;
 					
 					if(item.FIELDNAME=='StartTime'){
+						// console.log(item);
 						if(item.DEFAULTVALUE && item.DEFAULTVALUE.includes('D')){
 							let dayNum = item.DEFAULTVALUE.replace('D','')
 							_formValue.StartTime= utils.GetDateAfter(dayNum) //  '2000-01-01'
@@ -266,7 +281,7 @@
 
 				initQueryJson = JSON.parse(JSON.stringify(_formValue));
 				_self.queryJson = JSON.parse(JSON.stringify(initQueryJson));
-				this.resetStartTime()
+				// this.resetStartTime()
 				queryParams = { ...queryParams,
 					...initQueryJson
 				};
@@ -369,6 +384,7 @@
 					success: function(res) {
 						let cfgObg = JSON.parse(res.data).waybillCFG;
 						let tabLeb = cfgObg.length;
+						console.log(cfgObg);
 						_self.tabList = cfgObg;
 						_self.paddingTop = _self.tabList.length != 1 ? '45px' : '0';
 						// console.log(cfgObg);
@@ -504,16 +520,16 @@
 				setTimeout(function() {
 					uni.hideLoading();
 				}, 50000);
-				// queryUrl =  _self.tabList[_self.TabCur].CHILDRENS[0].INTERFACEURL
 				queryParams.userId = userId;
 				queryParams.PageInfo.page = pageList[i]
 				queryParams.StartTime = queryParams.StartTime.indexOf(' ') < 0 ? queryParams.StartTime + ' 00:00:00' : queryParams.StartTime,
 					queryParams.EndTime = queryParams.EndTime.indexOf(' ') < 0 ? queryParams.EndTime + ' 23:59:59' : queryParams.EndTime
-				// console.log(baseUrl + queryUrl[i]);
+				
 				console.log(queryParams);
 				_self.$axios({
 						url: baseUrl + queryUrl[i],
 						data: queryParams,
+						// data:testPortData,
 						token: token
 					})
 					.then(res => {
@@ -635,6 +651,7 @@
 				}
 				// console.log(result);
 				// 苹果版本 获取权限判断 
+			
 				isIos ? _self.judgeIosPermission('location', dataItem) : _self.requestAndroidPermission(
 					'android.permission.ACCESS_FINE_LOCATION', dataItem)
 
@@ -707,6 +724,16 @@
 						pageList[_self.TabCur] = 1;
 						totalList[_self.TabCur] = 1;
 						_self.getNewsList();
+						
+						console.log('前往公告页');
+						_self.uniSkip.navigateTo({
+							url: 'notice?baseUrl=' + baseUrl,
+							data: {
+								url: baseUrl,
+								myToken: token,
+							}
+						})
+						
 					})
 					.catch(d => {
 						_self.idDisabled01 = false
