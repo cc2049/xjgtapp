@@ -6,6 +6,7 @@
 </template>
 
 <script>
+// import { log } from 'console';
 	let _self, baseUrl, PK_MATERIAL, token;
 	export default {
 		data() {
@@ -15,6 +16,7 @@
 			}
 		},
 		onLoad(params) {
+			console.log(params);
 			_self = this
 			PK_MATERIAL = params.PK_MATERIAL;
 			baseUrl = params.baseUrl;
@@ -38,6 +40,7 @@
 				});
 			},
 			getData() {
+				console.log(token);
 				_self.$axios({
 						url: baseUrl + '/api/AppBDPLANTROUTEMAP/CommonPost?operateType=GetListByMaterId',
 						data: {

@@ -46,6 +46,7 @@
 					<view class="">
 						<button class="cu-btn round lines-blue" @click.stop="openDetail(item,1)">{{ '详情' }}</button>
 					</view>
+					<!-- <view class="" v-if="lineUrl[TabCur]"> -->
 					<view class="">
 						<button class="cu-btn round lines-blue" @click.stop="railwayImg(item)">厂内路线图</button>
 					</view>
@@ -115,6 +116,7 @@
 				approvalUrl: [], // 审核
 				eaditUrl: [], // 编辑
 				agreementURL: [], // 安全协议
+				lineUrl:[],  // 厂内路线图
 				queryJsonConfig: [], // 查询条件配置
 				queryJson: {}, // 查询条件提交参数
 				idDisabled01: false,
@@ -412,6 +414,9 @@
 								} else if (item2.ISFUNCTION == 'F') {
 									_self.agreementURL[index] = item2.INTERFACEURL
 								}
+								// else if(){
+								// 	_self.lineUrl[index] = item2.INTERFACEURL
+								// }
 
 							})
 							pageList.push(1);
@@ -727,7 +732,7 @@
 						
 						console.log('前往公告页');
 						_self.uniSkip.navigateTo({
-							url: 'notice?baseUrl=' + baseUrl,
+							url: 'notice?baseUrl=' + baseUrl + '&myToken=' +token,
 							data: {
 								url: baseUrl,
 								myToken: token,
