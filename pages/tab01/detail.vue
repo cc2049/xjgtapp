@@ -456,10 +456,12 @@
 				// ]
 				console.log(saveUrl);
 				console.log([saveData]);
+				return
 				let params = {
 					method: 'POST',
 					url: saveUrl,
-					data:  JSON.stringify([saveData]),
+					// data:  JSON.stringify([saveData]),
+					data:  saveData,
 					token: token,
 					isLoading: true
 				}
