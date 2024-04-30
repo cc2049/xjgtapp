@@ -454,9 +454,6 @@
 				// 	ASSIGNPLAN_DTLS:  JSON.stringify(subData)  ,
 				// 	details: JSON.stringify(subData)
 				// ]
-				console.log(saveUrl);
-				console.log([saveData]);
-				return
 				let params = {
 					method: 'POST',
 					url: saveUrl,
