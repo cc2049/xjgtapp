@@ -2,17 +2,18 @@
 	<view class="mypage" :style="{paddingTop:paddingTop}">
 		<scroll-view scroll-x class="bg-white nav fixed" v-if="tabList.length!=1">
 			<view class="flex text-center">
-				<view class="cu-item flex-sub text-m" :class="index==TabCur?'text-blue cur':''" v-for="(item,index) in tabList" :key="index"
-				 @tap="tabSelect(index)">
+				<view class="cu-item flex-sub text-m" :class="index==TabCur?'text-blue cur':''"
+					v-for="(item,index) in tabList" :key="index" @tap="tabSelect(index)">
 					{{ tabList[index].FUNCTIONNAME }}
 				</view>
 			</view>
 		</scroll-view>
 		<!-- 一车一单 0 / 一单多车2  :class="index%2==0?'bg-white' :'bg-red-light' " -->
 		<view class="card-list-wrapper" v-if='sendCarType == 2 || sendCarType == 0'>
-			<view class="card-list-row radius shadow-warp margin-top bg-white"   v-for="(item,index) in planList" :key="index"
-			 @click="checkItemOne(item,index)">
-				<view class="card-list-row-1" v-for="(itemC,indexC) in tabList[TabCur].DYNAMICMODEL.List" v-if="itemC.ISVISIBLE==1">
+			<view class="card-list-row radius shadow-warp margin-top bg-white" v-for="(item,index) in planList"
+				:key="index" @click="checkItemOne(item,index)">
+				<view class="card-list-row-1" v-for="(itemC,indexC) in tabList[TabCur].DYNAMICMODEL.List"
+					v-if="itemC.ISVISIBLE==1">
 					<text class="text-grey text-m">{{ itemC.DISPLAYNAME }}： </text>
 					<text class="text-black text-m"> {{ setFormat(itemC.EXPESSION,item[itemC.FIELDNAME],item) }}</text>
 				</view>
@@ -25,9 +26,10 @@
 
 		<!-- 一车多单 1 -->
 		<view class="card-list-wrapper" v-if='sendCarType == 1'>
-			<view class="card-list-row radius shadow-warp bg-white margin-top" v-for="(item,index) in planList" :key="index"
-			 @click="checkItem(item,index)">
-				<view class="card-list-row-1" v-for="(itemC,indexC) in tabList[TabCur].DYNAMICMODEL.List" v-if="itemC.ISVISIBLE==1">
+			<view class="card-list-row radius shadow-warp bg-white margin-top" v-for="(item,index) in planList"
+				:key="index" @click="checkItem(item,index)">
+				<view class="card-list-row-1" v-for="(itemC,indexC) in tabList[TabCur].DYNAMICMODEL.List"
+					v-if="itemC.ISVISIBLE==1">
 					<text class="text-grey text-m">{{ itemC.DISPLAYNAME }}：</text>
 					<text class="text-black text-m"> {{ setFormat(itemC.EXPESSION,item[itemC.FIELDNAME],item) }}</text>
 				</view>
@@ -43,22 +45,25 @@
 		<!-- 无单派车 表单配置 -->
 		<view v-if="sendCarType==3" class="card-list-wrapper margin-top-20">
 			<form>
-				<view class="cu-form-group" :class="formActiveIndex==index?   'solid-bottom-blue':'' " v-if='item.ISVISIBLE==1'
-				 v-for="(item,index) in configForm">
+				<view class="cu-form-group" :class="formActiveIndex==index?   'solid-bottom-blue':'' "
+					v-if='item.ISVISIBLE==1' v-for="(item,index) in configForm">
 					<view class="title">
 						{{ item.DISPLAYNAME }}<text class="text-red" v-if="item.ISREQUESTED==1">*</text>
 					</view>
 					<!-- <view class="title">控件类型{{ item.CTRLTYPE }}</view> -->
 
-					<view class="cu-form-val text-blue" v-if="item.CTRLTYPE == 'ExSearchMatch' " @click="searchEvent(item,index)">
+					<view class="cu-form-val text-blue" v-if="item.CTRLTYPE == 'ExSearchMatch' "
+						@click="searchEvent(item,index)">
 						{{ formValue[TabCur][item.FIELDNAME] }}
 					</view>
 
 					<view class="cu-form-input" v-if="item.CTRLTYPE == 'ExTextBox' ">
-						<input type="text" v-model="formValue[TabCur][item.FIELDNAME]" @focus="setActive(index)" value="" :placeholder="'请输入'+ item.DEFAULTNAME" />
+						<input type="text" v-model="formValue[TabCur][item.FIELDNAME]" @focus="setActive(index)"
+							value="" :placeholder="'请输入'+ item.DEFAULTNAME" />
 					</view>
 
-					<view class="cu-form-val text-blue" v-if="item.CTRLTYPE == 'ExDateTime' " @click="dateEvent(item,index)">
+					<view class="cu-form-val text-blue" v-if="item.CTRLTYPE == 'ExDateTime' "
+						@click="dateEvent(item,index)">
 						{{ formValue[TabCur][item.FIELDNAME] }}
 					</view>
 
@@ -67,13 +72,12 @@
 					</view>
 				</view>
 				<view class="padding-sm" @change="CheckboxChange" v-if="protocol">
-					<checkbox class="round blue" :class="checkbox?'checked':''" :checked="checked?true:false" value="A"></checkbox>
+					<checkbox class="round blue" :class="checkbox?'checked':''" :checked="checked?true:false" value="A">
+					</checkbox>
 					<text class="text-blue" @click="openProtocol">{{ '《'+ protocolTitle +'》' }}</text>
 				</view>
-				<button class="cu-btn block bg-blue margin-tb-sm lg"
-				:disabled="isDisabled"
-				:loading="isDisabled"
-				 @click="submitForm">
+				<button class="cu-btn block bg-blue margin-tb-sm lg" :disabled="isDisabled" :loading="isDisabled"
+					@click="submitForm">
 					提交
 				</button>
 			</form>
@@ -90,11 +94,9 @@
 			</button>
 		</view>
 
-		<query-drawer ref="queryDrawer" :queryJsonConfig='queryJsonConfig' :queryJson='queryJson' @querySearch='querySearch'
-		 @queryEvent='queryEvent' 
-		 @resetQuery='resetQuery'
-		 @hideModal='hideModal'
-		 ></query-drawer>
+		<query-drawer ref="queryDrawer" :queryJsonConfig='queryJsonConfig' :queryJson='queryJson'
+			@querySearch='querySearch' @queryEvent='queryEvent' @resetQuery='resetQuery'
+			@hideModal='hideModal'></query-drawer>
 
 	</view>
 
@@ -109,11 +111,11 @@
 	let _self, baseUrl, myToken, voluationJson, userId, token, webView,
 		queryUrl, submitUrl, page = 1,
 		total = 1,
-		isCheckSubmit = false ,
+		isCheckSubmit = false,
 		selectList = [],
 		selectIndexList = [],
-		initQueryJson = '' ,
-	tabListCFG;
+		initQueryJson = '',
+		tabListCFG;
 	let queryParams = {
 		StartTime: '1980-01-01',
 		EndTime: '2100-01-01',
@@ -128,6 +130,7 @@
 	export default {
 		data() {
 			return {
+				clickStatus: false,
 				ColorList: this.ColorList,
 				paddingTop: 0,
 				startType: 5, // 抽屉的开始日期类型
@@ -148,7 +151,7 @@
 				protocolTitle: '', // 协议标题
 				queryJsonConfig: [], // 查询条件配置
 				queryJson: {}, // 查询条件提交参数
-				isDisabled:false , // 提交按钮是否可用
+				isDisabled: false, // 提交按钮是否可用
 			};
 		},
 		components: {
@@ -170,10 +173,10 @@
 			page = 1
 			total = 1
 			_self.initGetStorage();
-			
+
 		},
 		onShow() {
-			
+
 			uni.$on('removeItemDCW', (data) => {
 				if (data.length > 0) {
 					data.forEach((item) => {
@@ -217,12 +220,12 @@
 			if (type.index == 0 && _self.sendCarType != 3) {
 				this.modalName = !this.modalName
 				// console.log(this.modalName);
-				if(this.modalName){
+				if (this.modalName) {
 					_self.showModal('DrawerModalL')
-				}else{
+				} else {
 					this.$refs.queryDrawer.closeDrawer('showLeft')
 				}
-				
+
 			}
 		},
 		//下拉刷新
@@ -238,9 +241,9 @@
 			_self.planList = [];
 			selectList = [], selectIndexList = [];
 			this.getNewsList();
-			setTimeout(function() {
-				uni.stopPullDownRefresh();
-			}, 1000);
+			// setTimeout(function() {
+			// 	uni.stopPullDownRefresh();
+			// }, 1000);
 			uni.showToast({
 				"title": "数据已刷新",
 				icon: "none"
@@ -257,19 +260,22 @@
 		methods: {
 			showModal(e) {
 				this.modalName = true;
-				
+
 				this.$refs.queryDrawer.showDrawer('showLeft')
 			},
-			
+
 			// 初始化查询参数
-			initQueryJsonFun(TTT){
+			initQueryJsonFun(TTT) {
 				_self.queryJsonConfig = _self.tabList[_self.TabCur].DYNAMICMODEL.Query;
-				let _formValue = {StartTime:'2000-01-01',EndTime:utils.GetDateAfter(0)};
+				let _formValue = {
+					StartTime: '2000-01-01',
+					EndTime: utils.GetDateAfter(0)
+				};
 				_self.queryJsonConfig.forEach((item, index) => {
 					let tipText = '';
 					_formValue[item.FIELDNAME] = tipText
-					
-					if(item.CTRLTYPE == 'ExEnum') {
+
+					if (item.CTRLTYPE == 'ExEnum') {
 						let str = item.EXPESSION.split('|');
 						let arr = utils.strToArray(str[1]);
 						let val = '',
@@ -280,38 +286,41 @@
 						// });
 						_formValue[arrlist] = arr
 						_formValue[`${item.FIELDNAME}index`] = 0
-						if(item.DEFAULTVALUE=='' || item.DEFAULTVALUE==null){
+						if (item.DEFAULTVALUE == '' || item.DEFAULTVALUE == null) {
 							_formValue[item.FIELDNAME] = ''
-						}else if(item.DEFAULTVALUE==0 ){
+						} else if (item.DEFAULTVALUE == 0) {
 							_formValue[item.FIELDNAME] = 0
 						}
 					}
-					
-					if(item.FIELDNAME=='StartTime'){
-						if(item.DEFAULTVALUE && item.DEFAULTVALUE.includes('D')){
-							let dayNum = item.DEFAULTVALUE.replace('D','')
-							_formValue.StartTime= utils.GetDateAfter(dayNum) //  '2000-01-01'
-						}else{
-							_formValue.StartTime= utils.GetDateAfter(-3) //  '2000-01-01'
+
+					if (item.FIELDNAME == 'StartTime') {
+						if (item.DEFAULTVALUE && item.DEFAULTVALUE.includes('D')) {
+							let dayNum = item.DEFAULTVALUE.replace('D', '')
+							_formValue.StartTime = utils.GetDateAfter(dayNum) //  '2000-01-01'
+						} else {
+							_formValue.StartTime = utils.GetDateAfter(-3) //  '2000-01-01'
 						}
 						item.ISVISIBLE = 0
-					}else if(item.FIELDNAME=='EndTime'){
+					} else if (item.FIELDNAME == 'EndTime') {
 						_formValue.EndTime = utils.GetDateAfter(0)
 						item.ISVISIBLE = 0
 					}
-					
-					
-					
+
+
+
 				})
 				initQueryJson = JSON.parse(JSON.stringify(_formValue));
-				_self.queryJson = JSON.parse(JSON.stringify(initQueryJson)) ;
+				_self.queryJson = JSON.parse(JSON.stringify(initQueryJson));
 				// this.resetStartTime()
-				queryParams = { ...queryParams,
+				queryParams = {
+					...queryParams,
 					...initQueryJson
 				};
-				 if(TTT !=1 ){ _self.getNewsList()};
+				if (TTT != 1) {
+					_self.getNewsList()
+				};
 			},
-			
+
 			// 重置查询条件
 			resetQuery() {
 				_self.queryJson = JSON.parse(JSON.stringify(initQueryJson));
@@ -321,22 +330,26 @@
 			hideModal(e) {
 				this.modalName = false
 			},
-			
-			closeDrawer(){
+
+			closeDrawer() {
 				this.$refs.queryDrawer.closeDrawer('showLeft')
 			},
-			
+
 			dateEvent(e, i) {
 				_self.dateTimekey = e.FIELDNAME;
 				this.$refs.dateTime.show();
 				_self.formActiveIndex = i;
 			},
-			
-			bindPickerChange({val, id,index}) { // 枚举确定
+
+			bindPickerChange({
+				val,
+				id,
+				index
+			}) { // 枚举确定
 				_self.queryJson[id] = val;
 				_self.queryJson[`${id}index`] = index;
 			},
-			
+
 			CheckboxChange(e) {
 				let values = e.detail.value;
 				_self.checkbox = !_self.checkbox
@@ -344,12 +357,13 @@
 			setFormat(a, b, c) {
 				return utils.setFormat(a, b, c);
 			},
-			
+
 			queryEvent() {
 				_self.hideModal();
 				page = 1;
 				total = 1;
-				queryParams = { ...queryParams,
+				queryParams = {
+					...queryParams,
 					..._self.queryJson
 				};
 				// console.log(queryParams);
@@ -369,8 +383,8 @@
 				uni.getStorage({
 					key: 'userInfo',
 					success: function(res) {
-						let result = JSON.parse(res.data) ;
-						baseUrl = result.baseUrl 
+						let result = JSON.parse(res.data);
+						baseUrl = result.baseUrl
 						token = result.Ticket
 						userId = result.UserId
 						_self.initConfig();
@@ -379,6 +393,8 @@
 				})
 			},
 			tabSelect(e) {
+				if (_self.clickStatus) return
+				_self.clickStatus = true
 				//  恢复默认查询条件
 				queryParams.StartTime = '2000-01-01 00:00:00';
 				_self.TabCur = e;
@@ -439,7 +455,7 @@
 						if (_self.sendCarType == 3) { // 无单
 							_self.configForm = _self.tabList[_self.TabCur].DYNAMICMODEL.Add;
 							submitUrl = _self.tabList[_self.TabCur].CHILDRENS[0].INTERFACEURL;
-							isCheckSubmit = _self.tabList[_self.TabCur].CHILDRENS[0].VDEF10 ==1?true:false
+							isCheckSubmit = _self.tabList[_self.TabCur].CHILDRENS[0].VDEF10 == 1 ? true : false
 							/* 隐藏左上角查询条件按钮 */
 							// let tttwebView = this.$mp.page.$getAppWebview();
 							webView.setTitleNViewButtonStyle(0, {
@@ -475,11 +491,12 @@
 				let title = _self.tabList[_self.TabCur].FUNCTIONNAME;
 				let saveuUrl = _self.tabList[_self.TabCur].CHILDRENS[1].INTERFACEURL
 				_self.uniSkip.navigateTo({
-					url: 'send?baseUrl=' + baseUrl + '&userId=' + userId + '&title=' + title + '&sendCarType=' + _self.sendCarType +
+					url: 'send?baseUrl=' + baseUrl + '&userId=' + userId + '&title=' + title + '&sendCarType=' +
+						_self.sendCarType +
 						'&token=' + token,
 					data: {
 						config: _self.tabList[_self.TabCur].DYNAMICMODEL.Add,
-						items: [handelItem] ,
+						items: [handelItem],
 						ajaxUrl: baseUrl + saveuUrl,
 						token: token
 					}
@@ -561,13 +578,13 @@
 					});
 				}
 				this.isDisabled = true
-				if(isCheckSubmit){
+				if (isCheckSubmit) {
 					this.openSetting(data)
-				}else {
+				} else {
 					let params = {
 						method: 'POST',
 						url: baseUrl + submitUrl,
-						data: submitdata ,
+						data: submitdata,
 						token: token
 					}
 					_self.$axios(params)
@@ -576,7 +593,7 @@
 							_self.$utils.tips('提交成功')
 							_self.initForm();
 						})
-						.catch(e=>{
+						.catch(e => {
 							_self.isDisabled = false
 						})
 				}
@@ -584,7 +601,7 @@
 				// data.LONGITUDE = 112.558785
 				// data.RADIUS = 1000
 			}, // 提交结束
-			
+
 			initForm() {
 				// console.log('执行表单序列');
 				let _formValue = {};
@@ -625,8 +642,10 @@
 				// queryUrl =  _self.tabList[_self.TabCur].CHILDRENS[0].INTERFACEURL
 				queryParams.userId = userId;
 				queryParams.PageInfo.page = page
-				queryParams.StartTime = queryParams.StartTime.indexOf(' ') < 0 ? queryParams.StartTime + ' 00:00:00' : queryParams.StartTime,
-				queryParams.EndTime = queryParams.EndTime.indexOf(' ') < 0 ? queryParams.EndTime + ' 23:59:59' : queryParams.EndTime
+				queryParams.StartTime = queryParams.StartTime.indexOf(' ') < 0 ? queryParams.StartTime + ' 00:00:00' :
+					queryParams.StartTime,
+					queryParams.EndTime = queryParams.EndTime.indexOf(' ') < 0 ? queryParams.EndTime + ' 23:59:59' :
+					queryParams.EndTime
 				// console.log(JSON.stringify(queryParams));
 				// console.log(baseUrl + queryUrl);
 				// console.log(token);
@@ -645,6 +664,7 @@
 						} = res;
 						// console.log(Result);
 						if (page == 1) {
+							_self.planList = []
 							if (_self.sendCarType == 1) {
 								let checkData = Result.rows.map((item) => {
 									item.check = false
@@ -668,17 +688,19 @@
 						// console.log(_self.planList);
 						total = Result.total || 1;
 						page++
+						uni.stopPullDownRefresh();
+						_self.clickStatus = false
 					})
 			},
-			
-			checkItemOne(item, i){
+
+			checkItemOne(item, i) {
 				selectIndexList = []
 				selectList = []
 				selectIndexList.push(i) // 如果选中则追加到 下标数组中
 				selectList.push(item)
 				this.nextEvent()
 			},
-			
+
 			// 一车多单时，执行的选中订单事件
 			checkItem(item, i) {
 				_self.planList[i].check = !_self.planList[i].check;
@@ -707,7 +729,8 @@
 				// _self.reachCheckReduce({isReachCheck:false,orderIdList:tntDataList})
 				// console.log(submitUrl);
 				this.uniSkip.navigateTo({
-					url: 'detail?baseUrl=' + baseUrl + '&userId=' + userId + '&title=' + title +'&sendCarType=' + _self.sendCarType ,
+					url: 'detail?baseUrl=' + baseUrl + '&userId=' + userId + '&title=' + title + '&sendCarType=' +
+						_self.sendCarType,
 					data: {
 						list: selectList,
 						addCFG: _self.tabList[_self.TabCur].DYNAMICMODEL.Add,
@@ -721,7 +744,7 @@
 				let url = baseUrl + _self.protocolUrl;
 				utils.openProtocol(url, _self.protocolTitle)
 			},
-			
+
 			//  签到 成功后 提交表单
 			checkIn(submitdata) {
 				// console.log(JSON.stringify(submitdata));
@@ -730,14 +753,15 @@
 					success: function(res) {
 						// console.log(res);
 						// let isOk = utils.judgeSign(carParkData, res.latitude, res.longitude);
-						let tt = utils.GetDistance(submitdata.LATITUDE, submitdata.LONGITUDE ,res.latitude, res.longitude);
+						let tt = utils.GetDistance(submitdata.LATITUDE, submitdata.LONGITUDE, res.latitude, res
+							.longitude);
 						// console.log(tt, submitdata.RADIUS);
 						if (tt < submitdata.RADIUS) { // 在允许签到范围内 
 							// console.log( baseUrl + submitUrl );
 							let params = {
 								method: 'POST',
 								url: baseUrl + submitUrl,
-								data: submitdata ,
+								data: submitdata,
 								token: token
 							}
 							_self.$axios(params)
@@ -746,14 +770,14 @@
 									_self.$utils.tips('提交成功')
 									_self.initForm();
 								})
-								.catch(e=>{
+								.catch(e => {
 									_self.isDisabled = false
 								})
-						}else{
+						} else {
 							_self.isDisabled = false
 							_self.$utils.tips('签到失败：未在停车场签到范围内。')
 						}
-						
+
 					},
 					fail: err => {
 						// plus.nativeUI.alert(JSON.stringify(err))
@@ -765,7 +789,7 @@
 					}
 				});
 			}, // 签到结束
-			
+
 			// 签到功能
 			openSetting(dataItem) {
 				let isIos = (plus.os.name == "iOS");
@@ -778,9 +802,9 @@
 				// 苹果版本 获取权限判断 
 				isIos ? _self.judgeIosPermission('location', dataItem) : _self.requestAndroidPermission(
 					'android.permission.ACCESS_FINE_LOCATION', dataItem)
-			
+
 			},
-			
+
 			async requestAndroidPermission(permisionID, dataItem) {
 				var result = await permision.requestAndroidPermission(permisionID)
 				if (result) {
@@ -816,26 +840,26 @@
 					});
 				}
 			},
-			
-			resetStartTime(){
+
+			resetStartTime() {
 				let AAA = {
-					0:'-300',
-					1:0,
-					2:-3,
-					3:-30
+					0: '-300',
+					1: 0,
+					2: -3,
+					3: -30
 				}
-				let SSS  = this.queryJsonConfig.filter(item=>{
-					return item.FIELDNAME == 'STIME' ;
+				let SSS = this.queryJsonConfig.filter(item => {
+					return item.FIELDNAME == 'STIME';
 				})
-				if( Array.isArray(SSS) && SSS.length>0){
-					let timeIndex = SSS[0].EXPESSION*1
+				if (Array.isArray(SSS) && SSS.length > 0) {
+					let timeIndex = SSS[0].EXPESSION * 1
 					initQueryJson.StartTime = this.$utils.GetDateAfter(AAA[timeIndex]);
 					queryParams.StartTime = this.$utils.GetDateAfter(AAA[timeIndex]);
-				}else {
+				} else {
 					initQueryJson.StartTime = '2000-01-01'
 				}
 			},
-			
+
 
 		}
 	}
@@ -881,7 +905,7 @@
 		top: 45%;
 	}
 
-	
+
 	.cuIcon-squarecheckfill {
 		font-size: 50upx;
 	}
@@ -908,7 +932,8 @@
 		height: 30rpx;
 		line-height: 30rpx;
 	}
-	.text-m{
-		font-size: 36rpx!important;
+
+	.text-m {
+		font-size: 36rpx !important;
 	}
 </style>

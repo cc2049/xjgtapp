@@ -423,7 +423,7 @@
 					if (!mycheckRes) {
 						checkRes2 = false
 						return uni.showToast({
-							title: `请检查订单的 ${graceChecker.error}`,
+							title: `请检查派车单的 ${graceChecker.error}`,
 							icon: "none"
 						});
 					} else {
@@ -447,7 +447,7 @@
 				// }]
 				let saveData = { ..._self.mainTableValue,
 					// ASSIGNPLAN_DTLS:  subData  ,
-					details: subData
+					ASSIGNPLAN_DTLS: subData
 				}
 				
 				// let saveData = [{ ..._self.mainTableValue,

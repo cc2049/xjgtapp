@@ -2,17 +2,18 @@
 	<view class="mypage" :style="{paddingTop:paddingTop}">
 		<scroll-view scroll-x class="bg-white nav fixed" v-if="tabList.length!=1">
 			<view class="flex text-center">
-				<view class="cu-item flex-sub text-m" :class="index==TabCur?'text-blue cur':''" v-for="(item,index) in tabList" :key="index"
-				 @tap="tabSelect(index)">
+				<view class="cu-item flex-sub text-m" :class="index==TabCur?'text-blue cur':''"
+					v-for="(item,index) in tabList" :key="index" @tap="tabSelect(index)">
 					{{ tabList[index].FUNCTIONNAME }}({{ AllNumList[index] }})
 				</view>
 			</view>
 		</scroll-view>
 		<!--  @click="openDetail(item)" -->
 		<view class="card-list-wrapper">
-			<view class="card-list-row radius shadow-warp bg-white margin-top" v-for="(item,index) in planList" :key="index"
-			 @click="openDetail(item,0)">
-				<view class="card-list-row-1" v-for="(itemC,indexC) in tabList[TabCur].DYNAMICMODEL.List" v-if="itemC.ISVISIBLE==1">
+			<view class="card-list-row radius shadow-warp bg-white margin-top" v-for="(item,index) in planList"
+				:key="index" @click="openDetail(item,0)">
+				<view class="card-list-row-1" v-for="(itemC,indexC) in tabList[TabCur].DYNAMICMODEL.List"
+					v-if="itemC.ISVISIBLE==1">
 					<text class="text-grey text-m">{{ itemC.DISPLAYNAME }}： </text>
 					<text class="text-black text-m"> {{ setFormat(itemC.EXPESSION,item[itemC.FIELDNAME],item) }}</text>
 				</view>
@@ -21,25 +22,31 @@
 				</view>
 				<view class='order-index-num text-white'>{{ index+1 }}</view>
 
-				<view class="solid-top-gray btn-area" v-if="checkInUrl[TabCur] || invalidUrl[TabCur] || approvalUrl[TabCur] ||eaditUrl[TabCur] || agreementURL[TabCur] ">
+				<view class="solid-top-gray btn-area"
+					v-if="checkInUrl[TabCur] || invalidUrl[TabCur] || approvalUrl[TabCur] ||eaditUrl[TabCur] || agreementURL[TabCur] ">
 					<view class="" v-if="checkInUrl[TabCur]">
-						<button class="cu-btn round lines-blue" :disabled="idDisabled01" :loading="idDisabled01" @click.stop="openSetting(item,1)">{{ item.ISQD==1? '已签到':'签到' }}</button>
+						<button class="cu-btn round lines-blue" :disabled="idDisabled01" :loading="idDisabled01"
+							@click.stop="openSetting(item,1)">{{ item.ISQD==1? '已签到':'签到' }}</button>
 					</view>
 
 					<view class="" v-if="agreementURL[TabCur]">
-						<button class="cu-btn round lines-blue" :disabled="idDisabled01" :loading="idDisabled01" @click.stop="agreementEvent(item,1)">{{ item.VDEF11==1? '已签署':'安全协议' }}</button>
+						<button class="cu-btn round lines-blue" :disabled="idDisabled01" :loading="idDisabled01"
+							@click.stop="agreementEvent(item,1)">{{ item.VDEF11==1? '已签署':'安全协议' }}</button>
 					</view>
 
 					<view class="" v-if="approvalUrl[TabCur]">
-						<button class="cu-btn round lines-blue" :disabled="idDisabled02" :loading="idDisabled02" @click.stop="approvalSubmit(item,1)">
+						<button class="cu-btn round lines-blue" :disabled="idDisabled02" :loading="idDisabled02"
+							@click.stop="approvalSubmit(item,1)">
 							审核 </button>
 					</view>
 
 					<view class="" v-if="invalidUrl[TabCur]">
-						<button class="cu-btn round lines-blue" :disabled="idDisabled03" :loading="idDisabled03" @click.stop="invalidEventSure(item,4)">{{ '作废' }}</button>
+						<button class="cu-btn round lines-blue" :disabled="idDisabled03" :loading="idDisabled03"
+							@click.stop="invalidEventSure(item,4)">{{ '作废' }}</button>
 					</view>
 					<view class="" v-if="eaditUrl[TabCur]">
-						<button class="cu-btn round lines-blue" :disabled="idDisabled04" :loading="idDisabled04" @click.stop="edaitEventSure(item,4)">{{ '编辑' }}</button>
+						<button class="cu-btn round lines-blue" :disabled="idDisabled04" :loading="idDisabled04"
+							@click.stop="edaitEventSure(item,4)">{{ '编辑' }}</button>
 					</view>
 
 
@@ -58,14 +65,15 @@
 		</view>
 
 		<w-picker mode="dateTime" startYear="2000" endYear="2050" step="1" :defaultVal="[1,1,1,1,2,5]" :current="true"
-		 @confirm="onConfirm" ref="dateTime" themeColor="#f00"></w-picker>
+			@confirm="onConfirm" ref="dateTime" themeColor="#f00"></w-picker>
 		<view class="nodata-icon-wrap text-grey" v-if="planList.length<1">
 			<text class="cuIcon-warn"></text>
 			<view>暂无数据</view>
 		</view>
 
-		<query-drawer ref="queryDrawer" :queryJsonConfig='queryJsonConfig' :queryJson='queryJson' @querySearch='querySearch'
-		 @queryEvent='queryEvent' @resetQuery='resetQuery' @bindPickerChange='bindPickerChange' @hideModal='hideModal'></query-drawer>
+		<query-drawer ref="queryDrawer" :queryJsonConfig='queryJsonConfig' :queryJson='queryJson'
+			@querySearch='querySearch' @queryEvent='queryEvent' @resetQuery='resetQuery'
+			@bindPickerChange='bindPickerChange' @hideModal='hideModal'></query-drawer>
 
 	</view>
 
@@ -98,6 +106,7 @@
 	export default {
 		data() {
 			return {
+				clickStatus:false,
 				ColorList: this.ColorList,
 				paddingTop: 0,
 				startType: 5, // 抽屉的开始日期类型
@@ -116,15 +125,15 @@
 				approvalUrl: [], // 审核
 				eaditUrl: [], // 编辑
 				agreementURL: [], // 安全协议
-				lineUrl:[],  // 厂内路线图
+				lineUrl: [], // 厂内路线图
 				queryJsonConfig: [], // 查询条件配置
 				queryJson: {}, // 查询条件提交参数
 				idDisabled01: false,
 				idDisabled02: false,
 				idDisabled03: false,
 				idDisabled04: false,
-				agreementContent:"" , // 安全协议内容
-				AllNumList:[],
+				agreementContent: "", // 安全协议内容
+				AllNumList: [],
 			};
 		},
 		components: {
@@ -184,9 +193,9 @@
 			pageList[_self.TabCur] = 1;
 			totalList[_self.TabCur] = 1;
 			this.getNewsList();
-			setTimeout(function() {
-				uni.stopPullDownRefresh();
-			}, 1000);
+			// setTimeout(function() {
+			// 	uni.stopPullDownRefresh();
+			// }, 1000);
 			uni.showToast({
 				"title": "数据已刷新",
 				icon: "none"
@@ -197,10 +206,10 @@
 			this.getNewsList();
 		},
 		methods: {
-			railwayImg(item){
+			railwayImg(item) {
 				console.log(item);
 				_self.uniSkip.navigateTo({
-					url: 'railwayImg?baseUrl=' + baseUrl + '&PK_MATERIAL=' + item.PK_MATERIAL+'&myToken=' +token
+					url: 'railwayImg?baseUrl=' + baseUrl + '&PK_MATERIAL=' + item.PK_MATERIAL + '&myToken=' + token
 					// data: {
 					// 	baseUrl: baseUrl,
 					// 	myToken: token,
@@ -244,21 +253,21 @@
 				_self.queryJsonConfig.forEach((item, index) => {
 					let tipText = '';
 					_formValue[item.FIELDNAME] = tipText;
-					
-					if(item.FIELDNAME=='StartTime'){
+
+					if (item.FIELDNAME == 'StartTime') {
 						// console.log(item);
-						if(item.DEFAULTVALUE && item.DEFAULTVALUE.includes('D')){
-							let dayNum = item.DEFAULTVALUE.replace('D','')
-							_formValue.StartTime= utils.GetDateAfter(dayNum) //  '2000-01-01'
-						}else{
-							_formValue.StartTime= utils.GetDateAfter(-3) //  '2000-01-01'
+						if (item.DEFAULTVALUE && item.DEFAULTVALUE.includes('D')) {
+							let dayNum = item.DEFAULTVALUE.replace('D', '')
+							_formValue.StartTime = utils.GetDateAfter(dayNum) //  '2000-01-01'
+						} else {
+							_formValue.StartTime = utils.GetDateAfter(-3) //  '2000-01-01'
 						}
 						item.ISVISIBLE = 0
-					}else if(item.FIELDNAME=='EndTime'){
+					} else if (item.FIELDNAME == 'EndTime') {
 						_formValue.EndTime = utils.GetDateAfter(0)
 						item.ISVISIBLE = 0
 					}
-					
+
 
 					if (item.CTRLTYPE == 'ExEnum') {
 						let str = item.EXPESSION.split('|');
@@ -284,11 +293,12 @@
 				initQueryJson = JSON.parse(JSON.stringify(_formValue));
 				_self.queryJson = JSON.parse(JSON.stringify(initQueryJson));
 				// this.resetStartTime()
-				queryParams = { ...queryParams,
+				queryParams = {
+					...queryParams,
 					...initQueryJson
 				};
 				// console.log(queryParams);
-				if(TTT !=1) _self.getNewsList();
+				if (TTT != 1) _self.getNewsList();
 			},
 
 			// 重置查询条件
@@ -302,7 +312,8 @@
 				totalList[_self.TabCur] = 1;
 				_self.artList = [];
 				_self.planList = [];
-				queryParams = { ...queryParams,
+				queryParams = {
+					...queryParams,
 					..._self.queryJson
 				};
 				// console.log(queryParams);
@@ -344,6 +355,8 @@
 			},
 
 			tabSelect(e) {
+				if(_self.clickStatus) return  
+				_self.clickStatus = true
 				this.hideModal()
 				this.closeDrawer()
 				_self.artList = [];
@@ -363,7 +376,7 @@
 					key: 'userInfo',
 					success: function(res) {
 						let result = JSON.parse(res.data);
-						baseUrl = result.baseUrl +'/'
+						baseUrl = result.baseUrl + '/'
 						token = result.Ticket
 						userId = result.UserId
 						_self.initConfig();
@@ -450,7 +463,8 @@
 					})
 				}
 				_self.uniSkip.navigateTo({
-					url: 'detail?baseUrl=' + baseUrl + '&userId=' + userId + '&title=' + title + '&invalidAjaxUrl=' + invalidAjaxUrl +
+					url: 'detail?baseUrl=' + baseUrl + '&userId=' + userId + '&title=' + title +
+						'&invalidAjaxUrl=' + invalidAjaxUrl +
 						'&detailAjaxUrl=' + detailAjaxUrl,
 					data: {
 						config: _self.tabList[_self.TabCur].DYNAMICMODEL.Detail,
@@ -463,7 +477,8 @@
 			edaitEventSure(d) {
 				// console.log(d);
 				_self.uniSkip.navigateTo({
-					url: 'submit?baseUrl=' + baseUrl + '&userId=' + userId + '&detailAjaxUrl=' + this.eaditUrl[_self.TabCur],
+					url: 'submit?baseUrl=' + baseUrl + '&userId=' + userId + '&detailAjaxUrl=' + this.eaditUrl[
+						_self.TabCur],
 					data: {
 						config: _self.tabList[_self.TabCur],
 						items: d,
@@ -522,14 +537,16 @@
 						duration: 1000
 					})
 				}
-				setTimeout(function() {
-					uni.hideLoading();
-				}, 50000);
+				// setTimeout(function() {
+				// 	uni.hideLoading();
+				// }, 50000);
 				queryParams.userId = userId;
 				queryParams.PageInfo.page = pageList[i]
-				queryParams.StartTime = queryParams.StartTime.indexOf(' ') < 0 ? queryParams.StartTime + ' 00:00:00' : queryParams.StartTime,
-					queryParams.EndTime = queryParams.EndTime.indexOf(' ') < 0 ? queryParams.EndTime + ' 23:59:59' : queryParams.EndTime
-				
+				queryParams.StartTime = queryParams.StartTime.indexOf(' ') < 0 ? queryParams.StartTime + ' 00:00:00' :
+					queryParams.StartTime,
+					queryParams.EndTime = queryParams.EndTime.indexOf(' ') < 0 ? queryParams.EndTime + ' 23:59:59' :
+					queryParams.EndTime
+
 				console.log(queryParams);
 				_self.$axios({
 						url: baseUrl + queryUrl[i],
@@ -542,6 +559,7 @@
 							Result,
 							Message
 						} = res;
+						console.log(pageList[i])
 						if (pageList[i] == 1) {
 							_self.planList = Result.rows
 						} else {
@@ -550,7 +568,9 @@
 						this.AllNumList[i] = Result.records
 						totalList[i] = Result.total || 1;
 						pageList[i] = pageList[i] + 1;
-						
+						uni.stopPullDownRefresh();
+						uni.hideLoading();
+						_self.clickStatus = false
 					})
 			},
 
@@ -656,7 +676,7 @@
 				}
 				// console.log(result);
 				// 苹果版本 获取权限判断 
-			
+
 				isIos ? _self.judgeIosPermission('location', dataItem) : _self.requestAndroidPermission(
 					'android.permission.ACCESS_FINE_LOCATION', dataItem)
 
@@ -729,16 +749,16 @@
 						pageList[_self.TabCur] = 1;
 						totalList[_self.TabCur] = 1;
 						_self.getNewsList();
-						
+
 						console.log('前往公告页');
 						_self.uniSkip.navigateTo({
-							url: 'notice?baseUrl=' + baseUrl + '&myToken=' +token,
+							url: 'notice?baseUrl=' + baseUrl + '&myToken=' + token,
 							data: {
 								url: baseUrl,
 								myToken: token,
 							}
 						})
-						
+
 					})
 					.catch(d => {
 						_self.idDisabled01 = false
@@ -753,16 +773,16 @@
 						token: token
 					})
 					.then(res => {
-						this.OpenAgreement(res.Result,data)
-					}).catch(err=>{
+						this.OpenAgreement(res.Result, data)
+					}).catch(err => {
 						this.$utils.tips('安全协议获取失败')
 					})
 			},
-			
-			OpenAgreement(data,item){
+
+			OpenAgreement(data, item) {
 				uni.showModal({
 					title: '安全告知',
-					content: data ,
+					content: data,
 					showCancel: false,
 					success(res) {
 						if (res.confirm) {
@@ -781,35 +801,35 @@
 										totalList[_self.TabCur] = 1;
 										_self.getNewsList();
 									}, 1500)
-								}).catch(err=>{
+								}).catch(err => {
 									this.$utils.tips('安全协议获取失败')
 								})
 						}
-						
-						
+
+
 					}
 				});
 			},
-			
-			resetStartTime(){
+
+			resetStartTime() {
 				let AAA = {
-					0:'-300',
-					1:0,
-					2:-3,
-					3:-30
+					0: '-300',
+					1: 0,
+					2: -3,
+					3: -30
 				}
-				let SSS  = this.queryJsonConfig.filter(item=>{
-					return item.FIELDNAME == 'STIME' ;
+				let SSS = this.queryJsonConfig.filter(item => {
+					return item.FIELDNAME == 'STIME';
 				})
-				if( Array.isArray(SSS) && SSS.length>0){
-					let timeIndex = SSS[0].EXPESSION*1
+				if (Array.isArray(SSS) && SSS.length > 0) {
+					let timeIndex = SSS[0].EXPESSION * 1
 					initQueryJson.StartTime = this.$utils.GetDateAfter(AAA[timeIndex]);
 					queryParams.StartTime = this.$utils.GetDateAfter(AAA[timeIndex]);
-				}else {
+				} else {
 					initQueryJson.StartTime = '2000-01-01'
 				}
 			},
-			
+
 
 		}
 	}
