@@ -656,6 +656,7 @@
 						savedata.LONGITUDE = res.longitude;
 						savedata.LATITUDE = res.latitude;
 						_self.saveCheckIn(savedata)
+						
 					},
 					fail: err => {
 						// plus.nativeUI.alert(JSON.stringify(err))
@@ -726,7 +727,7 @@
 
 			// 签到提交
 			saveCheckIn(e) {
-				// console.log(e)
+				console.log(e)
 				_self.idDisabled01 = true
 				let params = {
 					method: 'POST',
@@ -744,20 +745,29 @@
 						} = res;
 						_self.idDisabled01 = false
 						_self.$utils.tips('签到成功')
+						
+						// uni.showToast({
+						// 	title: '签到成功',
+						// });
+						
 						this.artList = [];
 						_self.planList = [];
 						pageList[_self.TabCur] = 1;
 						totalList[_self.TabCur] = 1;
 						_self.getNewsList();
 
-						console.log('前往公告页');
-						_self.uniSkip.navigateTo({
-							url: 'notice?baseUrl=' + baseUrl + '&myToken=' + token,
-							data: {
-								url: baseUrl,
-								myToken: token,
-							}
-						})
+						setTimeout(d => {
+							console.log('前往公告页');
+							_self.uniSkip.navigateTo({
+								url: 'notice?baseUrl=' + baseUrl + '&myToken=' + token,
+								data: {
+									url: baseUrl,
+									myToken: token,
+								}
+							})
+						}, 1500)
+
+						
 
 					})
 					.catch(d => {
