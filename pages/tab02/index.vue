@@ -209,7 +209,7 @@
 			railwayImg(item) {
 				console.log(item);
 				_self.uniSkip.navigateTo({
-					url: 'railwayImg?baseUrl=' + baseUrl + '&PK_MATERIAL=' + item.PK_MATERIAL + '&myToken=' + token
+					url: 'railwayImg?baseUrl=' + baseUrl + '&PK_MATERIAL=' + item.PK_MATERIAL + '&myToken=' + token + '&PK_ASSIGNPLAN_DTL=' + item.PK_ASSIGNPLAN_DTL
 					// data: {
 					// 	baseUrl: baseUrl,
 					// 	myToken: token,

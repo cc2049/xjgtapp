@@ -247,7 +247,7 @@
 		{
 			"path": "pages/tab02/notice",
 			"style": {
-				"navigationBarTitleText": "入场公告"
+				"navigationBarTitleText": "入厂公告"
 			}
 		},
 		{

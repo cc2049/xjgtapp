@@ -7,7 +7,7 @@
 
 <script>
 // import { log } from 'console';
-	let _self, baseUrl, PK_MATERIAL, token;
+	let _self, baseUrl, PK_MATERIAL, token,PK_ASSIGNPLAN_DTL;
 	export default {
 		data() {
 			return {
@@ -21,6 +21,7 @@
 			PK_MATERIAL = params.PK_MATERIAL;
 			baseUrl = params.baseUrl;
 			token = params.myToken
+			PK_ASSIGNPLAN_DTL = params.PK_ASSIGNPLAN_DTL
 			_self.getData()
 		},
 		methods: {
@@ -44,7 +45,8 @@
 				_self.$axios({
 						url: baseUrl + '/api/AppBDPLANTROUTEMAP/CommonPost?operateType=GetListByMaterId',
 						data: {
-							PK_MATERIAL: PK_MATERIAL
+							PK_MATERIAL: PK_MATERIAL,
+							PK_ASSIGNPLAN_DTL:PK_ASSIGNPLAN_DTL
 						},
 						token: token,
 						isLoading: true

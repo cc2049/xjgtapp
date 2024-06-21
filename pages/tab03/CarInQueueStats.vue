@@ -45,13 +45,13 @@
 					<view class="disflex justify-sb">
 						<view>
 							<view class="disflex mb-10">
-								<view class="queueList-label">当前序号：</view>
+								<view class="queueList-label">等待车数：</view>
 								<view class="queueList-value">{{objData.OrderCount}}</view>
 							</view>
-							<view class="disflex mb-10">
+							<!-- <view class="disflex mb-10">
 								<view class="queueList-label">当前排队车辆数：</view>
 								<view class="queueList-value">{{objData.TotalCount}}</view>
-							</view>
+							</view> -->
 							<view class="disflex mb-10">
 								<view class="queueList-label">物料：</view>
 								<view class="queueList-value">{{objData.MATERIALNAME}}</view>
@@ -381,7 +381,7 @@
 		&-label {
 			color: #636363;
 			font-size: 26rpx;
-			width: 140rpx;
+			width: 220rpx;
 		}
 
 		&-value {
